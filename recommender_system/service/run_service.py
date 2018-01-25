@@ -41,6 +41,7 @@ def main():
     port = int(service_config['port'])
 
     # start scheduler and assign it to update recommender data
+    # FIXME: Under Gunicorn (used for PROFIT demo and production) this most probably is not run => updating might not working, see https://stackoverflow.com/a/42258257 .
     SCHEDULER.start()
     schedule_recommender_data_update(SCHEDULER, service_config['update_data_hours'])
     atexit.register(lambda: SCHEDULER.shutdown())  # Shut down the scheduler when exiting the app
